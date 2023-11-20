@@ -35,7 +35,6 @@ class UserService {
 
     // Создание объекта пользователя для возврата его в api
     const userDto = new UserDto(user);
-    console.log(userDto);
     // Генерация JWT токенов
     const tokens = await tokenService.generateTokens({...userDto});
     await tokenService.saveToken(userDto.id, tokens.refreshToken);

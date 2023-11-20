@@ -32,9 +32,7 @@ class ClaimController {
 
     async deleteClaim (request: Request, response: Response) {
         try {
-            console.log(request.params.id);
             const claim = await claimService.deleteClaim(request.params.id);
-            console.log(claim);
             response.status(200).json(claim);
         } catch (error) {
             throw ApiError.InternalServerError('Ошибка удаления заявки');
