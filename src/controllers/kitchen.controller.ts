@@ -3,6 +3,15 @@ import kitchenService from "../services/kitchen.service";
 import ApiError from "../exceptions/api.error";
 
 class KitchenController {
+    async getMainKitchens (request: Request, response: Response) {
+        try {
+            const kitchen = await kitchenService.getMainKitchens();
+            response.status(200).json(kitchen);
+        } catch (error) {
+            throw ApiError.InternalServerError('Ошибка получения кухни');
+        }
+    };
+
     async getKitchens (request: Request, response: Response) {
         try {
             const kitchen = await kitchenService.getKitchens();
@@ -22,10 +31,15 @@ class KitchenController {
     };
 
     async addKitchen (request: Request, response: Response) {
+        if (!request.files || Object.keys(request.files).length === 0) {
+            throw ApiError.BadRequest('Нет файлов для загрузки');
+        }
         try {
-            const kitchen = await kitchenService.addKitchen(request.body);
+            const kitchen = await kitchenService.addKitchen(request.body, request.files);
+            console.log(kitchen);
             response.status(201).json(kitchen);
-        } catch (error) {
+        }
+        catch (error) {
             throw ApiError.InternalServerError('Ошибка добавления кухни');
         }
     };

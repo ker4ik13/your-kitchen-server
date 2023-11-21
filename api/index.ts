@@ -13,8 +13,12 @@ import authRoutes from '../src/routes/auth.routes';
 
 // Middlewares
 import errorMiddleware from '../src/middlewares/error.middleware';
+import path from 'path';
 
-const app =  express();
+const app = express();
+
+app.use('/images', express.static(path.join(__dirname, '../src/images')));
+
 app.use(express.json());
 app.use(function (req, res, next) {
   // TODO: настроить cors

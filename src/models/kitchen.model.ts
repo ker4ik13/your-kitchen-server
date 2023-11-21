@@ -6,12 +6,17 @@ const kitchenSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
-  options: {
-    type: [String],
-    required: true,
-    enum: ['loft', 'classic', 'minimalism', 'hightech', 'chalet'],
+  style: {
+    value: { type: String, required: true },
+    label: { type: String, required: true },
+    __isNew__: { type: Boolean },
   },
   photos: { type: [String], required: true },
+  type: {
+    value: { type: String, required: true },
+    label: { type: String, required: true },
+    __isNew__: { type: Boolean },
+  },
   term: { type: String, required: true },
 });
 
