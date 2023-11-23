@@ -1,9 +1,8 @@
 import { Kitchen } from "../models/kitchen.model";
-import fs from 'fs';
 
 class KitchenService {
     async getMainKitchens () {
-        const kitchens = await Kitchen.find().sort({ length: -1 }).limit(5);
+        const kitchens = await (await Kitchen.find({onMainPage: true}).sort({_id: -1}).limit(5));
         return kitchens;
     };
 
@@ -27,6 +26,7 @@ class KitchenService {
             style: JSON.parse(body.style),
             type: JSON.parse(body.type),
             term: body.term,
+            onMainPage: JSON.parse(body.onMainPage),
             photos: filesNames,
         }
         const kitchen = new Kitchen(newKitchen);
@@ -36,14 +36,6 @@ class KitchenService {
 
     async deleteKitchen (id: string) {
         const kitchen = await Kitchen.findByIdAndDelete(id);
-        kitchen?.photos.map((photo) => {
-            fs.unlink(`../images/${photo}`, err => {
-                if(err){
-                    throw err;
-                }
-                console.log(`Файл ${photo} удалён`);
-            });
-        })
         return kitchen;
     };
 
@@ -55,6 +47,7 @@ class KitchenService {
             style: JSON.parse((body.style)),
             type: JSON.parse((body.type)),
             term: body.term,
+            onMainPage: JSON.parse(body.onMainPage),
         }
         const kitchen = await Kitchen.findByIdAndUpdate(id, newKitchen, { new: true });
         return kitchen;

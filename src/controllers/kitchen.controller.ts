@@ -1,6 +1,8 @@
 import type { Request, Response } from "express";
 import kitchenService from "../services/kitchen.service";
 import ApiError from "../exceptions/api.error";
+import fs from 'fs';
+import path from "path";
 
 class KitchenController {
     async getMainKitchens (request: Request, response: Response) {
@@ -48,6 +50,15 @@ class KitchenController {
         try {
             const kitchen = await kitchenService.deleteKitchen(request.params.id);
             response.status(200).json(kitchen);
+            kitchen?.photos.map((photo) => {
+                fs.unlink(path.join(__dirname, `../images/${photo}`), err => {
+                    if(err){
+                        console.log(err);
+                    } else {
+                        console.log(`Файл ${photo} удалён`);
+                    }
+                });
+            })
         } catch (error) {
             throw ApiError.InternalServerError('Ошибка удаления кухни');
         }

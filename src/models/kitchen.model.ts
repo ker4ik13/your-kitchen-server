@@ -11,6 +11,7 @@ const kitchenSchema = new Schema({
     label: { type: String, required: true },
     __isNew__: { type: Boolean },
   },
+  onMainPage: { type: Boolean },
   photos: { type: [String], required: true },
   type: {
     value: { type: String, required: true },
