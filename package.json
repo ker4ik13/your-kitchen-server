@@ -9,7 +9,11 @@
     "build": "tsc",
     "vercel-build": "echo hello"
   },
-  "author": "ker4ik13 <kireev.kirill2004@mail.ru>",
+  "author": {
+    "name": "Кирилл Киреев",
+    "email": "kireev.kirill2004@mail.ru",
+    "url": "https://t.me/ker4ik13"
+  },
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",

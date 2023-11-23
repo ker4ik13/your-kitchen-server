@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import { handleError } from "../features/handleError";
 import { Worker } from "../models/worker.model";
 import ApiError from "../exceptions/api.error";
 import workerService from "../services/worker.service";
