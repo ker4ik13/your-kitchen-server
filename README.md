@@ -1,7 +1,45 @@
-## Твоя Кухня "Сервер"
+## Твоя Кухня Server
 
-Приложение разработано для компании ["Твоя Кухня"](https://youkuhnya.ru)
+Приложение разработано для компании [**Твоя Кухня**](https://youkuhnya.ru)
 
+### Работа с проектом
+#### Установка зависимостей
+```bash
+yarn
+```
+или
+```bash
+npm install
+```
+---
+#### Запуск в режиме разработки
+
+```bash
+npm run dev
+```
+или
+```bash
+yarn dev
+```
+---
+#### Сборка проекта
+```bash
+npm run build
+```
+или
+```bash
+yarn build
+```
+---
+#### Запуск в production режиме
+```bash
+npm run start
+```
+или
+```bash
+yarn start
+```
+---
 ### Стек:
 - TypeScript
 - Express
