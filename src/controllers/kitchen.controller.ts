@@ -38,7 +38,6 @@ class KitchenController {
         }
         try {
             const kitchen = await kitchenService.addKitchen(request.body, request.files);
-            console.log(kitchen);
             response.status(201).json(kitchen);
         }
         catch (error) {

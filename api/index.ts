@@ -17,7 +17,7 @@ import path from 'path';
 
 const app = express();
 
-app.use('/images/', express.static(path.join(__dirname, '../src/images')));
+app.use('/images/', express.static(path.join(__dirname, '../images')));
 
 app.use(express.json());
 app.use(function (req, res, next) {

@@ -2,7 +2,7 @@ import multer, { type FileFilterCallback } from "multer";
 import path from "path";
 
 
-const folderName = path.join(__dirname, '../images');
+const folderName = path.join(__dirname, '../../images');
 const types = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
 
 const storage = multer.diskStorage({
