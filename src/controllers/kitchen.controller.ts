@@ -50,7 +50,7 @@ class KitchenController {
             const kitchen = await kitchenService.deleteKitchen(request.params.id);
             response.status(200).json(kitchen);
             kitchen?.photos.map((photo) => {
-                fs.unlink(path.join(__dirname, `../images/${photo}`), err => {
+                fs.unlink(path.join(__dirname, `../../images/${photo}`), err => {
                     if(err){
                         console.log(err);
                     } else {
