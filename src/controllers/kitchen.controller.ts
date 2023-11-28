@@ -16,8 +16,9 @@ class KitchenController {
 
     async getKitchens (request: Request, response: Response) {
         try {
-            const kitchen = await kitchenService.getKitchens();
-            response.status(200).json(kitchen);
+            const kitchens = await kitchenService.getKitchens();
+            console.log(`запрос ${Date.now().toString()}`);
+            response.status(200).json(kitchens);
         } catch (error) {
             throw ApiError.InternalServerError('Ошибка получения кухни');
         }

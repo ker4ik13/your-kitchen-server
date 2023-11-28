@@ -1,4 +1,6 @@
 import { Claim } from "../models/claim.model";
+import { IClaim } from "../types/IClaim";
+import mailService from "./mail.service";
 
 class ClaimService {
     async getClaims () {
@@ -14,6 +16,13 @@ class ClaimService {
     async addClaim (body: object) {
         const claim = new Claim(body);
         const result = await claim.save();
+        const newClaim: IClaim = {
+            _id: result._id.toString(),
+            date: result.date,
+            firstName: result.firstName,
+            mobilePhone: result.mobilePhone,
+        }
+        mailService.sendMailClaim(newClaim);
         return result;
     };
 
