@@ -10,7 +10,7 @@ const router = express.Router();
 router.get("/kitchens-main", KitchenController.getMainKitchens);
 router.get("/kitchens", KitchenController.getKitchens);
 router.get("/kitchens/:id", KitchenController.getKitchen);
-router.post("/kitchens", uploadMany, KitchenController.addKitchen )
+router.post("/kitchens", authMiddleware, uploadMany, KitchenController.addKitchen )
 router.patch("/kitchens/:id", authMiddleware, uploadMany, KitchenController.updateKitchen);
 router.delete("/kitchens/:id", authMiddleware, KitchenController.deleteKitchen);
 

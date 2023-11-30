@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({
-  photo: { type: String, required: true },
+  photo: { type: String },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   text: { type: String, required: true },

@@ -17,9 +17,7 @@ import path from 'path';
 
 const app = express();
 
-const isDevPath = process.env.PORT === '3001' ? '../images' : '../../images';
-
-app.use('/images/', express.static(path.join(__dirname, isDevPath)));
+app.use('/images/', express.static(path.join(__dirname, '../images')));
 
 app.use(express.json());
 app.use(function (req, res, next) {

@@ -1,6 +1,8 @@
 import type { Request, Response } from "express";
 import ApiError from "../exceptions/api.error";
 import reviewService from "../services/review.service";
+import fs from 'fs';
+import path from "path";
 
 class ReviewController {
     async getReviews (request: Request, response: Response) {
@@ -22,8 +24,11 @@ class ReviewController {
     };
 
     async addReview (request: Request, response: Response) {
+        if (!request.files || Object.keys(request.files).length === 0) {
+            throw ApiError.BadRequest('Нет файлов для загрузки');
+        }
         try {
-            const review = await reviewService.addReview(request.body);
+            const review = await reviewService.addReview(request.body, request.files);
             response.status(201).json(review);
         } catch (error) {
             throw ApiError.InternalServerError('Ошибка добавления отзыва');
@@ -34,6 +39,16 @@ class ReviewController {
         try {
             const review = await reviewService.deleteReview(request.params.id);
             response.status(200).json(review);
+
+            review?.photos.map((photo) => {
+                fs.unlink(path.join(__dirname, `../../images/${photo}`), err => {
+                    if(err){
+                        console.log(err);
+                    } else {
+                        console.log(`Файл ${photo} удалён`);
+                    }
+                });
+            })
         } catch (error) {
             throw ApiError.InternalServerError('Ошибка удаления отзыва');
         }
