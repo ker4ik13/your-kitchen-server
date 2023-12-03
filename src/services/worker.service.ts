@@ -11,8 +11,16 @@ class WorkerService {
         return worker;
     };
 
-    async addWorker (body: object) {
-        const worker = new Worker(body);
+    async addWorker (body: any, file: any) {
+        const newWorker = {
+            photo: file.filename,
+            firstName: body.firstName,
+            lastName: body.lastName,
+            jobTitle: body.jobTitle,
+            experience: body.experience,
+
+        }
+        const worker = new Worker(newWorker);
         const result = await worker.save();
         return result;
     };

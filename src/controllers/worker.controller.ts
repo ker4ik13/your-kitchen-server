@@ -1,7 +1,8 @@
 import type { Request, Response } from "express";
-import { Worker } from "../models/worker.model";
 import ApiError from "../exceptions/api.error";
 import workerService from "../services/worker.service";
+import fs from 'fs';
+import path from "path";
 
 class WorkerController {
     async getWorkers (request: Request, response: Response) {
@@ -23,8 +24,11 @@ class WorkerController {
     };
 
     async addWorker (request: Request, response: Response) {
+        if (!request.file) {
+            throw ApiError.BadRequest('Нет файла для загрузки');
+        }
         try {
-            const worker = await workerService.addWorker(request.body)
+            const worker = await workerService.addWorker(request.body, request.file)
             response.status(201).json(worker);
         } catch (error) {
             throw ApiError.InternalServerError('Ошибка добавления работника');
@@ -35,6 +39,14 @@ class WorkerController {
         try {
             const worker = await workerService.deleteWorker(request.params.id);
             response.status(200).json(worker);
+
+            fs.unlink(path.join(__dirname, `../../images/${worker?.photo}`), err => {
+                if(err){
+                    console.log(err);
+                } else {
+                    console.log(`Файл ${worker?.photo} удалён`);
+                }
+            });
         } catch (error) {
             throw ApiError.InternalServerError('Ошибка удаления работника');
         }
