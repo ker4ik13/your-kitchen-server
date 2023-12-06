@@ -2,7 +2,7 @@ import { Kitchen } from "../models/kitchen.model";
 
 class KitchenService {
     async getMainKitchens () {
-        const kitchens = await (await Kitchen.find({onMainPage: true}).sort({_id: -1}).limit(5));
+        const kitchens = await Kitchen.find({onMainPage: true}).sort({_id: -1}).limit(5);
         return kitchens;
     };
 
