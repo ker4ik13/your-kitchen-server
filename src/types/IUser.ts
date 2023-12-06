@@ -4,4 +4,8 @@ export interface IUser {
   password: string;
   isActivated: boolean;
   activationLink: string;
+  role: {
+    value: string;
+    label: string;
+  };
 }

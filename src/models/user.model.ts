@@ -7,6 +7,10 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   isActivated: { type: Boolean, default: false },
   activationLink: { type: String },
+  role: {
+    value: { type: String, required: true },
+    label: { type: String, required: true },
+  },
 });
 
 export const User = mongoose.model("User", UserSchema);

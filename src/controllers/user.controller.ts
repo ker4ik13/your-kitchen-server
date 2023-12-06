@@ -20,8 +20,8 @@ class UserController {
           return next(ApiError.BadRequest('Validation error', errors.array()));
         }
 
-        const { email, password } = request.body;
-        const userData = await userService.registration(email, password);
+        const { email, password, role } = request.body;
+        const userData = await userService.registration(email, password, role);
         
         response.cookie('refreshToken', userData.refreshToken, {
           maxAge: days30,
@@ -104,6 +104,40 @@ class UserController {
         next(error);
       }
     };
+    async addUser (request: Request, response: Response, next: NextFunction) {
+      try {
+        const errors = validationResult(request);
+
+        if(!errors.isEmpty()) {
+          return next(ApiError.BadRequest('Validation error', errors.array()));
+        }
+
+        const { email, password, role } = request.body;
+        const user = await userService.addUser(email, password, role);
+        return response.json(user).status(201);
+      } catch (error) {
+        next(error);
+      }
+    };
+
+    async deleteUser (request: Request, response: Response, next: NextFunction) {
+      try {
+        const user = await userService.deleteUser(request.params.id);
+        return response.json(user).status(200);
+      } catch (error) {
+        next(error);
+      }
+    };
+
+    async changeUser (request: Request, response: Response, next: NextFunction) {
+      try {
+        const user = await userService.changeUser(request.params.id, request.body);
+        return response.json(user).status(200);
+      } catch (error) {
+        next(error);
+      }
+    };
+
 
 };
 

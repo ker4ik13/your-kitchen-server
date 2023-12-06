@@ -14,7 +14,7 @@ if(!API_URL) {
 
 class UserService {
 
-  async registration (email: string, password: string) {
+  async registration (email: string, password: string, role: string) {
 
     // Проверка, есть ли пользователь с таким email в бд
     const candidate = await User.findOne({email})
@@ -28,7 +28,7 @@ class UserService {
     const activationLink = randomUUID();
 
     // Создание пользователя
-    const user = await User.create({email, password: hashPassword, activationLink});
+    const user = await User.create({email, password: hashPassword, activationLink, role});
     // Отправка письма для активации на email пользователя
     // TODO: доделать email
     // await mailService.sendActivationMail(email, `${API_URL}/api/activate/${activationLink}`);
@@ -37,7 +37,7 @@ class UserService {
     const userDto = new UserDto(user);
     // Генерация JWT токенов
     const tokens = await tokenService.generateTokens({...userDto});
-    await tokenService.saveToken(userDto.id, tokens.refreshToken);
+    await tokenService.saveToken(userDto._id, tokens.refreshToken);
 
     const returnUser = {
       accessToken: tokens.accessToken,
@@ -73,7 +73,7 @@ class UserService {
 
     const userDto = new UserDto(user);
     const tokens = await tokenService.generateTokens({ ...userDto });
-    await tokenService.saveToken(userDto.id, tokens.refreshToken);
+    await tokenService.saveToken(userDto._id, tokens.refreshToken);
 
     const returnUser = {
       accessToken: tokens.accessToken,
@@ -105,7 +105,7 @@ class UserService {
     const user = await User.findById(tokenFromDb.user?._id);
     const userDto = new UserDto(user);
     const tokens = await tokenService.generateTokens({ ...userDto });
-    await tokenService.saveToken(userDto.id, tokens.refreshToken);
+    await tokenService.saveToken(userDto._id, tokens.refreshToken);
 
     const returnUser = {
       accessToken: tokens.accessToken,
@@ -122,9 +122,22 @@ class UserService {
   };
 
   async getUser (id: string) {
-    const user = await User.findById(id);
+    return await User.findById(id);
+  }
+
+  async addUser (email: string, password: string, role: string) {
+    const {user} = await this.registration(email, password, role);
     return user;
   }
+
+  async deleteUser (id: string) {
+    return await User.findByIdAndDelete(id);
+  }
+
+  async changeUser (id: string, body: any) {
+    return await User.findByIdAndUpdate(id, body, { new: true });
+  }
+
 }
 
 export default new UserService();
