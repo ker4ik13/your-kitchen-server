@@ -10,6 +10,7 @@ import kitchenRoutes from '../src/routes/kitchen.routes';
 import reviewRoutes from '../src/routes/review.routes';
 import workerRoutes from '../src/routes/worker.routes';
 import authRoutes from '../src/routes/auth.routes';
+import photoRoutes from '../src/routes/photo.routes';
 
 // Middlewares
 import errorMiddleware from '../src/middlewares/error.middleware';
@@ -21,7 +22,6 @@ app.use('/images/', express.static(path.join(__dirname, '../images')));
 
 app.use(express.json());
 app.use(function (req, res, next) {
-  // TODO: настроить cors
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE, PATCH');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -39,6 +39,7 @@ app.use('/api', claimRoutes);
 app.use('/api', kitchenRoutes);
 app.use('/api', reviewRoutes);
 app.use('/api', workerRoutes);
+app.use('/api', photoRoutes);
 app.use('/api', authRoutes);
 
 // Импорт .env
