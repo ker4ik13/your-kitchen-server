@@ -6,6 +6,7 @@ const articleModel = new Schema({
   title: { type: String, required: true },
   preview: { type: String, required: true },
   content: { type: String, required: true },
+  onMainPage: { type: Boolean },
 });
 
 export const Article = mongoose.model("Article", articleModel);

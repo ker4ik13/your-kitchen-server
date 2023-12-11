@@ -11,6 +11,7 @@ import reviewRoutes from '../src/routes/review.routes';
 import workerRoutes from '../src/routes/worker.routes';
 import authRoutes from '../src/routes/auth.routes';
 import photoRoutes from '../src/routes/photo.routes';
+import articleRoutes from '../src/routes/article.routes';
 
 // Middlewares
 import errorMiddleware from '../src/middlewares/error.middleware';
@@ -40,6 +41,7 @@ app.use('/api', kitchenRoutes);
 app.use('/api', reviewRoutes);
 app.use('/api', workerRoutes);
 app.use('/api', photoRoutes);
+app.use('/api', articleRoutes);
 app.use('/api', authRoutes);
 
 // Импорт .env
