@@ -3,15 +3,22 @@ import { IArticle } from "../types/IArticle";
 
 class ArticleService {
     async getMainArticles () {
-        return await Article.find({onMainPage: true}).sort({_id: -1}).limit(5);
+        return await Article.find({onMainPage: true}).sort({_id: -1}).limit(3);
     };
 
     async getArticles () {
-        return await Article.find();
+        return await Article.find().sort({ _id: -1 });
     };
 
     async getArticle (id: string) {
         return await Article.findById(id);
+    };
+
+    async viewArticle (id: string) {
+        return await Article.findByIdAndUpdate(id, { $inc: { viewCount: 1 } }, {
+            multi: true,
+            new: true,
+        });
     };
 
     async addArticle (body: any, files: any) {
@@ -19,9 +26,12 @@ class ArticleService {
 
         const newArticle: IArticle = {
             title: body.title,
+            description: body.description,
             preview: filesNames[0],
             content: body.content,
             onMainPage: JSON.parse(body.onMainPage),
+            viewCount: JSON.parse(body.viewCount) | 0,
+            author: body.author,
         }
 
         const article = new Article(newArticle);
@@ -36,6 +46,7 @@ class ArticleService {
     async updateArticle (id: string, body: any) {
         const newArticle = {
             title: body.title,
+            description: body.description,
             content: body.content,
             onMainPage: JSON.parse(body.onMainPage),
         }

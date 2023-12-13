@@ -10,6 +10,7 @@ const router = express.Router();
 router.get("/articles-main", ArticleController.getMainArticles);
 router.get("/articles", ArticleController.getArticles);
 router.get("/articles/:id", ArticleController.getArticle);
+router.get("/articles-view/:id", ArticleController.viewArticle);
 router.post("/articles", authMiddleware, uploadMany, ArticleController.addArticle);
 router.patch("/articles/:id", authMiddleware, ArticleController.updateArticle);
 router.delete("/articles/:id", authMiddleware, ArticleController.deleteArticle);

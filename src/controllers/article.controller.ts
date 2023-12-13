@@ -32,6 +32,15 @@ class ArticleController {
         }
     };
 
+    async viewArticle (request: Request, response: Response) {
+        try {
+            const result = await articleService.viewArticle(request.params.id);
+            response.status(200).json(result);
+        } catch (error) {
+            throw ApiError.InternalServerError('Ошибка увеличения просмотров статьи');
+        }
+    };
+
     async addArticle (request: Request, response: Response) {
         if (!request.files || Object.keys(request.files).length === 0) {
             throw ApiError.BadRequest('Нет файлов для загрузки');
