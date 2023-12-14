@@ -9,6 +9,8 @@ const articleModel = new Schema({
   content: { type: String, required: true },
   onMainPage: { type: Boolean },
   viewCount: { type: Number },
+  createdAt: { type: String, required: true },
+  updatedAt: { type: String },
 });
 
 export const Article = mongoose.model("Article", articleModel);

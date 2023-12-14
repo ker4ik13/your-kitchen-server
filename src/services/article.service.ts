@@ -32,6 +32,7 @@ class ArticleService {
             onMainPage: JSON.parse(body.onMainPage),
             viewCount: JSON.parse(body.viewCount) | 0,
             author: body.author,
+            createdAt: new Date().toISOString(),
         }
 
         const article = new Article(newArticle);
@@ -44,11 +45,15 @@ class ArticleService {
     };
 
     async updateArticle (id: string, body: any) {
-        const newArticle = {
+        const newArticle: any = {
             title: body.title,
             description: body.description,
             content: body.content,
             onMainPage: JSON.parse(body.onMainPage),
+        }
+
+        if(body.updatedAt){
+            newArticle.updatedAt = body.updatedAt;
         }
 
         return await Article.findByIdAndUpdate(id, newArticle, { new: true });
