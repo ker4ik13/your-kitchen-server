@@ -3,7 +3,7 @@ import { Photo } from "../models/photo.model";
 
 class PhotoService {
     async getPhotos () {
-        return await Photo.find();
+        return await Photo.find().sort({ _id: -1 });
     };
 
     async getPhoto (id: string) {

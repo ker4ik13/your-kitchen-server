@@ -36,8 +36,6 @@ class MailService {
   }
 
   async sendMailClaim (claim: IClaim) {
-    console.log(this.transporter.options);
-    console.log(connection);
 
     const result = await this.transporter.sendMail({
       from: `${connection.user}@yandex.ru`,

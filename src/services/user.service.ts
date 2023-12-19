@@ -135,7 +135,16 @@ class UserService {
   }
 
   async changeUser (id: string, body: any) {
-    return await User.findByIdAndUpdate(id, body, { new: true });
+
+    const newUser: any = {
+      role: body.role,
+    }
+
+    if(body.password){
+      newUser.password = await bcrypt.hash(body.password, 3);
+    }
+
+    return await User.findByIdAndUpdate(id, newUser, { new: true });
   }
 
 }
