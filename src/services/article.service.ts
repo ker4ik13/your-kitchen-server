@@ -61,6 +61,10 @@ class ArticleService {
             newArticle.link = body.link;
         }
 
+        if(body.viewCount){
+            newArticle.viewCount = body.viewCount;
+        }
+
         return await Article.findByIdAndUpdate(id, newArticle, { new: true });
     };
 
