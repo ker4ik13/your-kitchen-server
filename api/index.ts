@@ -1,58 +1,68 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors'
-import cookieParser from 'cookie-parser';
-import 'dotenv/config';
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import "dotenv/config";
+import express from "express";
+import mongoose from "mongoose";
 
 // Routes
-import claimRoutes from '../src/routes/claim.routes';
-import kitchenRoutes from '../src/routes/kitchen.routes';
-import reviewRoutes from '../src/routes/review.routes';
-import workerRoutes from '../src/routes/worker.routes';
-import authRoutes from '../src/routes/auth.routes';
-import photoRoutes from '../src/routes/photo.routes';
-import articleRoutes from '../src/routes/article.routes';
+import articleRoutes from "../src/routes/article.routes";
+import authRoutes from "../src/routes/auth.routes";
+import claimRoutes from "../src/routes/claim.routes";
+import furnitureRoutes from "../src/routes/furniture.routes";
+import kitchenRoutes from "../src/routes/kitchen.routes";
+import photoRoutes from "../src/routes/photo.routes";
+import reviewRoutes from "../src/routes/review.routes";
+import workerRoutes from "../src/routes/worker.routes";
 
 // Middlewares
-import errorMiddleware from '../src/middlewares/error.middleware';
-import path from 'path';
+import path from "path";
+import errorMiddleware from "../src/middlewares/error.middleware";
 
 const app = express();
 
-app.use('/images/', express.static(path.join(__dirname, '../images')));
+app.use("/images/", express.static(path.join(__dirname, "../images")));
 
 app.use(express.json());
 app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE, PATCH');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET,HEAD,OPTIONS,POST,PUT,DELETE, PATCH",
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+  );
   next();
 });
 
 // Routes
 app.use(cookieParser());
-app.use(cors({
-  credentials: true,
-  origin: process.env.CLIENT_URL,
-}));
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL,
+  }),
+);
 app.use(errorMiddleware);
-app.use('/api', claimRoutes);
-app.use('/api', kitchenRoutes);
-app.use('/api', reviewRoutes);
-app.use('/api', workerRoutes);
-app.use('/api', photoRoutes);
-app.use('/api', articleRoutes);
-app.use('/api', authRoutes);
+app.use("/api", claimRoutes);
+app.use("/api", kitchenRoutes);
+app.use("/api", reviewRoutes);
+app.use("/api", workerRoutes);
+app.use("/api", photoRoutes);
+app.use("/api", articleRoutes);
+app.use("/api", furnitureRoutes);
+app.use("/api", authRoutes);
 
 // Импорт .env
 const PORT = Number(process.env.PORT);
 const DB_URL = process.env.DB_URL;
 
-if(!PORT){
-  throw new Error('PORT is undefined');
+if (!PORT) {
+  throw new Error("PORT is undefined");
 }
-if(!DB_URL){
-  throw new Error('DB_URL is undefined');
+if (!DB_URL) {
+  throw new Error("DB_URL is undefined");
 }
 
 // Подключение к БД
@@ -66,9 +76,9 @@ mongoose
   });
 
 // Запуск сервера
-app.listen(PORT,  () => {
+app.listen(PORT, () => {
   console.log(`Server has been started on ${PORT} port`);
 });
-app.on('error', (error) => {
+app.on("error", (error) => {
   console.log(error);
-})
+});
