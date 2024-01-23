@@ -3,5 +3,7 @@ export interface IClaim {
   firstName: string;
   mobilePhone: string;
   date: string;
-  email?: string;
+  email?: string | null;
+  tag?: string | null;
+  location?: string | null;
 }
