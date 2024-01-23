@@ -12,8 +12,8 @@ class FurnitureService {
     return await Furniture.find();
   }
 
-  async getOneFurniture(id: string) {
-    return await Furniture.findById(id);
+  async getOneFurniture(link: string) {
+    return await Furniture.findOne({ link });
   }
 
   async addFurniture(body: any, files: any) {
@@ -24,6 +24,7 @@ class FurnitureService {
       description: body.description,
       price: +body.price,
       photos: filesNames,
+      link: body.link,
     };
 
     if (body.onMainPage) {
@@ -34,22 +35,23 @@ class FurnitureService {
     return await furniture.save();
   }
 
-  async deleteFurniture(id: string) {
-    return await Furniture.findByIdAndDelete(id);
+  async deleteFurniture(link: string) {
+    return await Furniture.findOneAndDelete({ link });
   }
 
-  async updateFurniture(id: string, body: any) {
+  async updateFurniture(link: string, body: any) {
     const newFurniture: any = {
       name: body.name,
       description: body.description,
       price: +body.price,
+      link: body.link,
     };
 
     if (body.onMainPage) {
       newFurniture.onMainPage = body.onMainPage;
     }
 
-    return await Furniture.findByIdAndUpdate(id, newFurniture, {
+    return await Furniture.findOneAndUpdate({ link }, newFurniture, {
       new: true,
     });
   }
