@@ -1,19 +1,14 @@
+import { deletePhotos } from "../helpers/deletePhotos";
 import { Furniture } from "../models/furniture.model";
 import { IFurniture } from "../types/IFurniture";
 
 class FurnitureService {
-  async getMainFurniture() {
-    return await Furniture.find({ onMainPage: true })
-      .sort({ _id: -1 })
-      .limit(5);
-  }
-
   async getAllFurniture() {
     return await Furniture.find();
   }
 
-  async getOneFurniture(link: string) {
-    return await Furniture.findOne({ link });
+  async getOneFurniture(slug: string) {
+    return await Furniture.findOne({ slug });
   }
 
   async addFurniture(body: any, files: any) {
@@ -24,34 +19,44 @@ class FurnitureService {
       description: body.description,
       price: +body.price,
       photos: filesNames,
-      link: body.link,
+      slug: body.slug,
     };
-
-    if (body.onMainPage) {
-      newFurniture.onMainPage = body.onMainPage;
-    }
 
     const furniture = new Furniture(newFurniture);
     return await furniture.save();
   }
 
-  async deleteFurniture(link: string) {
-    return await Furniture.findOneAndDelete({ link });
+  async deleteFurniture(slug: string) {
+    return await Furniture.findOneAndDelete({ slug });
   }
 
-  async updateFurniture(link: string, body: any) {
+  async updateFurniture(slug: string, body: any, files: any) {
     const newFurniture: any = {
       name: body.name,
       description: body.description,
       price: +body.price,
-      link: body.link,
+      slug: body.slug,
+      photos: [...JSON.parse(body.photos)],
     };
 
-    if (body.onMainPage) {
-      newFurniture.onMainPage = body.onMainPage;
+    const oldFurniture = await this.getOneFurniture(slug);
+
+    if (oldFurniture?.photos.length !== newFurniture.photos.length) {
+      const deletedPhotos = oldFurniture?.photos.filter(
+        (photo) => !newFurniture.photos.includes(photo),
+      );
+
+      if (deletedPhotos && deletedPhotos.length) {
+        deletePhotos(deletedPhotos);
+      }
     }
 
-    return await Furniture.findOneAndUpdate({ link }, newFurniture, {
+    if (files.length > 0) {
+      const filesNames = files.map((file: any) => file.filename);
+      newFurniture.photos = [...newFurniture.photos, ...filesNames];
+    }
+
+    return await Furniture.findOneAndUpdate({ slug }, newFurniture, {
       new: true,
     });
   }

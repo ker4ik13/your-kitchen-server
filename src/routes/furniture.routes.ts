@@ -7,8 +7,7 @@ import { uploadMany } from "../middlewares/file.middleware";
 const router = express.Router();
 
 // Обработка запросов
-router.get("/furniture-main", FurnitureController.getMainFurniture);
-router.get("/all-furniture", FurnitureController.getAllFurniture);
+router.get("/furniture", FurnitureController.getAllFurniture);
 router.get("/furniture/:id", FurnitureController.getOneFurniture);
 router.post(
   "/furniture",

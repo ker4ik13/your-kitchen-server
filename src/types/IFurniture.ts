@@ -1,8 +1,8 @@
 export interface IFurniture {
   name: string;
-  link: string;
+  slug: string;
   description: string;
   price: number;
   photos: string[];
-  onMainPage?: boolean;
+  newPhotos?: string[];
 }

@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 
 const furnitureSchema = new Schema({
   name: { type: String, required: true },
-  link: { type: String, required: true },
+  slug: { type: String, required: true, unique: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
   photos: { type: [String], required: true },
-  onMainPage: { type: Boolean },
+  newPhotos: { type: [String], required: false },
 });
 
 export const Furniture = mongoose.model("Furniture", furnitureSchema);

@@ -1,19 +1,9 @@
 import type { Request, Response } from "express";
-import fs from "fs";
-import path from "path";
 import ApiError from "../exceptions/api.error";
+import { deletePhotos } from "../helpers/deletePhotos";
 import furnitureService from "../services/furniture.service";
 
 class FurnitureController {
-  async getMainFurniture(request: Request, response: Response) {
-    try {
-      const result = await furnitureService.getMainFurniture();
-      response.status(200).json(result);
-    } catch (error) {
-      throw ApiError.InternalServerError("Ошибка получения мебели");
-    }
-  }
-
   async getAllFurniture(request: Request, response: Response) {
     try {
       const result = await furnitureService.getAllFurniture();
@@ -51,15 +41,10 @@ class FurnitureController {
     try {
       const result = await furnitureService.deleteFurniture(request.params.id);
       response.status(200).json(result);
-      result?.photos.map((photo) => {
-        fs.unlink(path.join(__dirname, `../../images/${photo}`), (err) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log(`Файл ${photo} удалён`);
-          }
-        });
-      });
+
+      if (result) {
+        deletePhotos(result.photos);
+      }
     } catch (error) {
       throw ApiError.InternalServerError("Ошибка удаления мебели");
     }
@@ -70,6 +55,7 @@ class FurnitureController {
       const result = await furnitureService.updateFurniture(
         request.params.id,
         request.body,
+        request.files,
       );
       response.status(200).json(result);
     } catch (error) {
