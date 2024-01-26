@@ -4,7 +4,7 @@ import { IFurniture } from "../types/IFurniture";
 
 class FurnitureService {
   async getAllFurniture() {
-    return await Furniture.find();
+    return await Furniture.find().sort({ _id: -1 });
   }
 
   async getOneFurniture(slug: string) {
