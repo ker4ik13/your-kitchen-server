@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import articleRoutes from "../src/routes/article.routes";
 import authRoutes from "../src/routes/auth.routes";
 import claimRoutes from "../src/routes/claim.routes";
+import discountRoutes from "../src/routes/discount.routes";
 import furnitureRoutes from "../src/routes/furniture.routes";
 import kitchenRoutes from "../src/routes/kitchen.routes";
 import photoRoutes from "../src/routes/photo.routes";
@@ -52,6 +53,7 @@ app.use("/api", workerRoutes);
 app.use("/api", photoRoutes);
 app.use("/api", articleRoutes);
 app.use("/api", furnitureRoutes);
+app.use("/api", discountRoutes);
 app.use("/api", authRoutes);
 
 // Импорт .env
