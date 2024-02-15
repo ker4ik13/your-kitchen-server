@@ -22,9 +22,18 @@ class KitchenController {
     }
   }
 
-  async getKitchen(request: Request, response: Response) {
+  async getKitchenById(request: Request, response: Response) {
     try {
-      const kitchen = await kitchenService.getKitchen(request.params.id);
+      const kitchen = await kitchenService.getKitchenById(request.params.id);
+      response.status(200).json(kitchen);
+    } catch (error) {
+      throw ApiError.InternalServerError("Ошибка получения кухни");
+    }
+  }
+
+  async getKitchenBySlug(request: Request, response: Response) {
+    try {
+      const kitchen = await kitchenService.getKitchenBySlug(request.params.id);
       response.status(200).json(kitchen);
     } catch (error) {
       throw ApiError.InternalServerError("Ошибка получения кухни");

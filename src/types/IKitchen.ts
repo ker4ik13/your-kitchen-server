@@ -8,4 +8,10 @@ export interface IKitchen {
   options: KitchensOptions[];
   photos: string[];
   term: string;
+  slug: string;
+  meta: {
+    keywords?: string;
+    description?: string;
+    title?: string;
+  };
 }

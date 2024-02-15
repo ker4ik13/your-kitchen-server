@@ -19,6 +19,12 @@ const kitchenSchema = new Schema({
     __isNew__: { type: Boolean },
   },
   term: { type: String, required: true },
+  slug: { type: String, required: true },
+  meta: {
+    keywords: String,
+    description: String,
+    title: String,
+  },
 });
 
-export const Kitchen = mongoose.model('Kitchen', kitchenSchema);
+export const Kitchen = mongoose.model("Kitchen", kitchenSchema);
