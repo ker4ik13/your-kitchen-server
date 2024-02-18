@@ -40,6 +40,18 @@ class KitchenController {
     }
   }
 
+  async checkSlug(request: Request, response: Response) {
+    if (!request.params.id) {
+      return response.json({ valid: false });
+    }
+    try {
+      const result = await kitchenService.checkSlug(request.params.id);
+      response.json(result);
+    } catch (error) {
+      throw ApiError.InternalServerError("Ошибка проверки ссылки кухни");
+    }
+  }
+
   async addKitchen(request: Request, response: Response) {
     if (!request.files || Object.keys(request.files).length === 0) {
       throw ApiError.BadRequest("Нет файлов для загрузки");

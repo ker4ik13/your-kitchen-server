@@ -22,6 +22,20 @@ class KitchenService {
     return kitchenBySlug;
   }
 
+  async checkSlug(slug: string) {
+    if (!slug) {
+      return { valid: false };
+    }
+
+    const kitchenBySlug = await Kitchen.findOne({ slug });
+
+    if (kitchenBySlug) {
+      return { valid: false };
+    }
+
+    return { valid: true };
+  }
+
   async addKitchen(body: any, files: any) {
     const filesNames = files.map((file: any) => file.filename);
 

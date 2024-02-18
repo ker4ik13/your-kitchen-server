@@ -2,7 +2,7 @@ import express from "express";
 // Controllers
 import DiscountController from "../controllers/discount.controller";
 import authMiddleware from "../middlewares/auth.middleware";
-import { upload } from "../middlewares/file.middleware";
+import { uploadPhoto } from "../middlewares/photo.middleware";
 
 const router = express.Router();
 
@@ -12,13 +12,13 @@ router.get("/discounts/:id", DiscountController.getDiscount);
 router.post(
   "/discounts",
   authMiddleware,
-  upload,
+  uploadPhoto,
   DiscountController.addDiscount,
 );
 router.patch(
   "/discounts/:id",
   authMiddleware,
-  upload,
+  uploadPhoto,
   DiscountController.updateDiscount,
 );
 router.delete(

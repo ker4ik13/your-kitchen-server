@@ -22,6 +22,7 @@ import errorMiddleware from "../src/middlewares/error.middleware";
 const app = express();
 
 app.use("/images/", express.static(path.join(__dirname, "../images")));
+app.use("/files/", express.static(path.join(__dirname, "../files")));
 
 app.use(express.json());
 app.use(function (req, res, next) {

@@ -2,7 +2,7 @@ import express from "express";
 // Controllers
 import KitchenController from "../controllers/kitchen.controller";
 import authMiddleware from "../middlewares/auth.middleware";
-import { uploadMany } from "../middlewares/file.middleware";
+import { uploadManyPhotos } from "../middlewares/photo.middleware";
 
 const router = express.Router();
 
@@ -11,16 +11,17 @@ router.get("/kitchens-main", KitchenController.getMainKitchens);
 router.get("/kitchens", KitchenController.getKitchens);
 router.get("/kitchens/:id", KitchenController.getKitchenById);
 router.get("/kitchens-by-slug/:id", KitchenController.getKitchenBySlug);
+router.get("/check-slug/:id", KitchenController.checkSlug);
 router.post(
   "/kitchens",
   authMiddleware,
-  uploadMany,
+  uploadManyPhotos,
   KitchenController.addKitchen,
 );
 router.patch(
   "/kitchens/:id",
   authMiddleware,
-  uploadMany,
+  uploadManyPhotos,
   KitchenController.updateKitchen,
 );
 router.delete("/kitchens/:id", authMiddleware, KitchenController.deleteKitchen);

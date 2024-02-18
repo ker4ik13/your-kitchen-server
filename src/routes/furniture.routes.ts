@@ -2,7 +2,7 @@ import express from "express";
 // Controllers
 import FurnitureController from "../controllers/furniture.controller";
 import authMiddleware from "../middlewares/auth.middleware";
-import { uploadMany } from "../middlewares/file.middleware";
+import { uploadManyPhotos } from "../middlewares/photo.middleware";
 
 const router = express.Router();
 
@@ -12,13 +12,13 @@ router.get("/furniture/:id", FurnitureController.getOneFurniture);
 router.post(
   "/furniture",
   authMiddleware,
-  uploadMany,
+  uploadManyPhotos,
   FurnitureController.addFurniture,
 );
 router.patch(
   "/furniture/:id",
   authMiddleware,
-  uploadMany,
+  uploadManyPhotos,
   FurnitureController.updateFurniture,
 );
 router.delete(

@@ -1,8 +1,8 @@
-import express from 'express';
+import express from "express";
 // Controllers
-import ArticleController from '../controllers/article.controller';
-import authMiddleware from '../middlewares/auth.middleware';
-import { uploadMany } from '../middlewares/file.middleware';
+import ArticleController from "../controllers/article.controller";
+import authMiddleware from "../middlewares/auth.middleware";
+import { uploadManyPhotos } from "../middlewares/photo.middleware";
 
 const router = express.Router();
 
@@ -11,7 +11,12 @@ router.get("/articles-main", ArticleController.getMainArticles);
 router.get("/articles", ArticleController.getArticles);
 router.get("/articles/:id", ArticleController.getArticle);
 router.get("/articles-view/:id", ArticleController.viewArticle);
-router.post("/articles", authMiddleware, uploadMany, ArticleController.addArticle);
+router.post(
+  "/articles",
+  authMiddleware,
+  uploadManyPhotos,
+  ArticleController.addArticle,
+);
 router.patch("/articles/:id", authMiddleware, ArticleController.updateArticle);
 router.delete("/articles/:id", authMiddleware, ArticleController.deleteArticle);
 

@@ -13,8 +13,20 @@ class ClaimService {
     return claim;
   }
 
-  async addClaim(body: object) {
-    const claim = new Claim(body);
+  async addClaim(body: any, files: any) {
+    const filesNames = files.map((file: any) => file.filename);
+
+    const addedClaim = {
+      date: body.date,
+      firstName: body.firstName,
+      mobilePhone: body.mobilePhone,
+      email: body.email,
+      tag: body.tag,
+      location: body.location,
+      files: filesNames,
+    };
+
+    const claim = new Claim(addedClaim);
     const result = await claim.save();
 
     const newClaim: IClaim = {
