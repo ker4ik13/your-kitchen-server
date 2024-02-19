@@ -1,3 +1,4 @@
+import { deleteFiles } from "../helpers/deleteFiles";
 import { Claim } from "../models/claim.model";
 import { IClaim } from "../types/IClaim";
 import mailService from "./mail.service";
@@ -45,6 +46,11 @@ class ClaimService {
 
   async deleteClaim(id: string) {
     const claim = await Claim.findByIdAndDelete(id);
+
+    if (claim?.files) {
+      deleteFiles(claim.files);
+    }
+
     return claim;
   }
 
