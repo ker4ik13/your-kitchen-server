@@ -10,8 +10,9 @@ const storage = multer.diskStorage({
   filename(req, file, callback) {
     callback(
       null,
-      `${Buffer.from(file.originalname, "latin1")}-${new Date().toLocaleString(
-        "ru",
+      `${new Date().toLocaleString("ru")}-${Buffer.from(
+        file.originalname,
+        "latin1",
       )}`.toString(),
     );
   },

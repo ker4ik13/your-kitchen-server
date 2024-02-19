@@ -8,6 +8,7 @@ const router = express.Router();
 
 // Обработка запросов
 router.get("/kitchens-main", KitchenController.getMainKitchens);
+router.get("/kitchens-rss", KitchenController.getRssKitchens);
 router.get("/kitchens", KitchenController.getKitchens);
 router.get("/kitchens/:id", KitchenController.getKitchenById);
 router.get("/kitchens-by-slug/:id", KitchenController.getKitchenBySlug);

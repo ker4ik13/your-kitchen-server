@@ -4,6 +4,19 @@ import { deletePhotos } from "../helpers/deletePhotos";
 import kitchenService from "../services/kitchen.service";
 
 class KitchenController {
+  async getRssKitchens(request: Request, response: Response) {
+    try {
+      const result = await kitchenService.getRssKitchens();
+      response.header("Content-Type", "text/xml");
+      response.send(result);
+      // response.set("Content-Type", "application/xml");
+      // response.send(xml(result));
+      // response.status(200).json(result).header("Content-Type", "text/xml");
+    } catch (error) {
+      throw ApiError.InternalServerError("Ошибка получения rss кухонь");
+    }
+  }
+
   async getMainKitchens(request: Request, response: Response) {
     try {
       const kitchen = await kitchenService.getMainKitchens();
