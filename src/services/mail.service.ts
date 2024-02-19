@@ -42,7 +42,7 @@ class MailService {
       html: `
           <div>
             <h1>Новая заявка!</h1>
-            <p><b>Имя</b>: ${claim.firstName}</p>
+            ${claim.firstName ? `<p><b>Имя</b>: ${claim.firstName}</p>` : ""}
             ${
               claim.email
                 ? `<p>Почта: <a href=${"mailto:" + claim.email}></a>${
@@ -60,6 +60,11 @@ class MailService {
             <p><b>Дата заявки</b>: ${new Date(claim.date).toLocaleString(
               "ru",
             )}</p>
+            ${
+              claim.files
+                ? `<p><b>Файлы</b>: ${claim.files.length} шт.</p>`
+                : ""
+            }
           </div>
         `,
     });
