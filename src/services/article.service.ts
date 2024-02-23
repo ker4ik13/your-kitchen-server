@@ -25,6 +25,20 @@ class ArticleService {
     );
   }
 
+  async checkSlug(link: string) {
+    if (!link) {
+      return { valid: false };
+    }
+
+    const articleBySlug = await Article.findOne({ link });
+
+    if (articleBySlug) {
+      return { valid: false };
+    }
+
+    return { valid: true };
+  }
+
   async addArticle(body: any, files: any) {
     const filesNames = files.map((file: any) => file.filename);
 
@@ -34,10 +48,11 @@ class ArticleService {
       preview: filesNames[0],
       content: body.content,
       onMainPage: JSON.parse(body.onMainPage),
-      viewCount: JSON.parse(body.viewCount) | 0,
+      viewCount: JSON.parse(body.viewCount) || 0,
       author: body.author,
       createdAt: new Date().toISOString(),
       link: body.link,
+      meta: JSON.parse(body.meta) || {},
     };
 
     const article = new Article(newArticle);
@@ -55,6 +70,7 @@ class ArticleService {
       description: body.description,
       content: body.content,
       onMainPage: JSON.parse(body.onMainPage),
+      meta: body.meta,
     };
 
     if (body.updatedAt) {

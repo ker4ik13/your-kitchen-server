@@ -11,6 +11,7 @@ router.get("/articles-main", ArticleController.getMainArticles);
 router.get("/articles", ArticleController.getArticles);
 router.get("/articles/:id", ArticleController.getArticle);
 router.get("/articles-view/:id", ArticleController.viewArticle);
+router.get("/check-articles-slug/:id", ArticleController.checkSlug);
 router.post(
   "/articles",
   authMiddleware,

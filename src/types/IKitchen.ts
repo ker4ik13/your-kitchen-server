@@ -1,3 +1,4 @@
+import type { IMeta } from "./IMeta";
 import { KitchensOptions } from "./KitchenOptions";
 
 export interface IKitchen {
@@ -9,9 +10,5 @@ export interface IKitchen {
   photos: string[];
   term: string;
   slug: string;
-  meta: {
-    keywords?: string;
-    description?: string;
-    title?: string;
-  };
+  meta: IMeta;
 }

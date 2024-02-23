@@ -12,6 +12,11 @@ const articleModel = new Schema({
   viewCount: { type: Number },
   createdAt: { type: String, required: true },
   updatedAt: { type: String },
+  meta: {
+    keywords: String,
+    description: String,
+    title: String,
+  },
 });
 
 export const Article = mongoose.model("Article", articleModel);

@@ -1,10 +1,9 @@
-import { User } from "../models/user.model";
 import bcrypt from 'bcrypt';
 import { randomUUID } from "crypto";
-import mailService from "./mail.service";
-import tokenService from "./token.service";
 import UserDto from "../dtos/user.dto";
 import ApiError from "../exceptions/api.error";
+import { User } from "../models/user.model";
+import tokenService from "./token.service";
 
 const API_URL: string = process.env.API_URL || '';
 
@@ -29,9 +28,6 @@ class UserService {
 
     // Создание пользователя
     const user = await User.create({email, password: hashPassword, activationLink, role});
-    // Отправка письма для активации на email пользователя
-    // TODO: доделать email
-    // await mailService.sendActivationMail(email, `${API_URL}/api/activate/${activationLink}`);
 
     // Создание объекта пользователя для возврата его в api
     const userDto = new UserDto(user);

@@ -31,6 +31,18 @@ class ArticleController {
     }
   }
 
+  async checkSlug(request: Request, response: Response) {
+    if (!request.params.id) {
+      return response.json({ valid: false });
+    }
+    try {
+      const result = await articleService.checkSlug(request.params.id);
+      response.json(result);
+    } catch (error) {
+      throw ApiError.InternalServerError("Ошибка проверки ссылки статьи");
+    }
+  }
+
   async viewArticle(request: Request, response: Response) {
     try {
       const result = await articleService.viewArticle(request.params.id);

@@ -1,3 +1,4 @@
+import { deletePhotos } from "../helpers/deletePhotos";
 import { Kitchen } from "../models/kitchen.model";
 
 class KitchenService {
@@ -114,7 +115,7 @@ class KitchenService {
     return await Kitchen.findByIdAndDelete(id);
   }
 
-  async updateKitchen(id: string, body: any) {
+  async updateKitchen(id: string, body: any, files: any) {
     const newKitchen = {
       title: body.title,
       description: body.description,
@@ -125,7 +126,26 @@ class KitchenService {
       onMainPage: JSON.parse(body.onMainPage),
       slug: body.slug,
       meta: JSON.parse(body.meta),
+      photos: [...JSON.parse(body.photos)],
     };
+
+    const oldKitchen = await this.getKitchenById(id);
+
+    if (oldKitchen?.photos.length !== newKitchen.photos.length) {
+      const deletedPhotos = oldKitchen?.photos.filter(
+        (photo) => !newKitchen.photos.includes(photo),
+      );
+
+      if (deletedPhotos && deletedPhotos.length) {
+        deletePhotos(deletedPhotos);
+      }
+    }
+
+    if (files.length > 0) {
+      const filesNames = files.map((file: any) => file.filename);
+      newKitchen.photos = [...newKitchen.photos, ...filesNames];
+    }
+
     return await Kitchen.findByIdAndUpdate(id, newKitchen, {
       new: true,
     });

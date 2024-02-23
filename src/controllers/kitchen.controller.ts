@@ -98,6 +98,7 @@ class KitchenController {
       const kitchen = await kitchenService.updateKitchen(
         request.params.id,
         request.body,
+        request.files,
       );
       response.status(200).json(kitchen);
     } catch (error) {
