@@ -69,13 +69,7 @@ class KitchenService {
     return await Kitchen.findById(id);
   }
   async getKitchenBySlug(slug: string) {
-    const kitchenBySlug = await Kitchen.findOne({ slug });
-
-    if (!kitchenBySlug) {
-      return await Kitchen.findById(slug);
-    }
-
-    return kitchenBySlug;
+    return await Kitchen.findOne({ slug });
   }
 
   async checkSlug(slug: string) {
