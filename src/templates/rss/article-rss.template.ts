@@ -5,10 +5,13 @@ import { articlePageTemplate } from "../pages";
 // <pubDate>${article.createdAt}</pubDate>
 // <author>Твоя кухня</author>
 
-export const articleRssTemplate = (article: IArticle): string => {
+export const articleRssTemplate = (
+  article: IArticle,
+  articles: IArticle[],
+): string => {
   return `<item turbo="true">
 			<!-- Информация о странице -->
-			<title>${article.title} | Твоя кухня</title>
+			<title>${article.title}</title>
 			<turbo:extendedHtml>true</turbo:extendedHtml>
 			<link>${SITE_URL}/articles/${article.link}</link>
 			<metrics>
@@ -22,7 +25,7 @@ export const articleRssTemplate = (article: IArticle): string => {
 			<yandex:related></yandex:related>
 			<turbo:content>
 					<![CDATA[
-						${articlePageTemplate(article)}
+						${articlePageTemplate(article, articles)}
 					]]>
 			</turbo:content>
 	</item>`;

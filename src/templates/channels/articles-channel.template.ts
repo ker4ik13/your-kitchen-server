@@ -20,8 +20,8 @@ export const articlesChannelTemplate = (
           <turbo:analytics type="Yandex" id="${YANDEX_ANALYTICS}"></turbo:analytics>
           <language>ru</language>
 
-          ${articles.map((article) => {
-            return articleRssTemplate(article);
+          ${articles.map((article: IArticle) => {
+            return articleRssTemplate(article, articles);
           })}
         </channel>
     </rss>`;
