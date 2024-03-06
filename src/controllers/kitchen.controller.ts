@@ -9,9 +9,6 @@ class KitchenController {
       const result = await kitchenService.getRssKitchens();
       response.header("Content-Type", "text/xml");
       response.send(result);
-      // response.set("Content-Type", "application/xml");
-      // response.send(xml(result));
-      // response.status(200).json(result).header("Content-Type", "text/xml");
     } catch (error) {
       throw ApiError.InternalServerError("Ошибка получения rss кухонь");
     }

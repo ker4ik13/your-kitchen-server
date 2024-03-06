@@ -42,12 +42,8 @@ class KitchenService {
                 <yandex:related></yandex:related>
                 <turbo:content>
                     <![CDATA[
-                        <h1 class="ArticlePage_title__lnxfI">${
-                          kitchen.title
-                        }</h1>
-                        <div class="ArticlePage_content__OgnaC">${
-                          kitchen.description
-                        }</div>
+                        <h1 class="title">${kitchen.title}</h1>
+                        <div class="content">${kitchen.description}</div>
                     ]]>
                 </turbo:content>
             </item>`;

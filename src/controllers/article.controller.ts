@@ -1,12 +1,21 @@
 import type { Request, Response } from "express";
 import ApiError from "../exceptions/api.error";
 import { deletePhotos } from "../helpers/deletePhotos";
-import articleService from "../services/article.service";
+import ArticleService from "../services/article.service";
 
 class ArticleController {
+  async getRssArticles(request: Request, response: Response) {
+    try {
+      const result = await ArticleService.getRssArticles();
+      response.header("Content-Type", "text/xml");
+      response.send(result);
+    } catch (error) {
+      throw ApiError.InternalServerError("Ошибка получения rss статей");
+    }
+  }
   async getMainArticles(request: Request, response: Response) {
     try {
-      const result = await articleService.getMainArticles();
+      const result = await ArticleService.getMainArticles();
       response.status(200).json(result);
     } catch (error) {
       throw ApiError.InternalServerError("Ошибка получения главных статей");
@@ -15,7 +24,7 @@ class ArticleController {
 
   async getArticles(request: Request, response: Response) {
     try {
-      const result = await articleService.getArticles();
+      const result = await ArticleService.getArticles();
       response.status(200).json(result);
     } catch (error) {
       throw ApiError.InternalServerError("Ошибка получения статей");
@@ -24,7 +33,7 @@ class ArticleController {
 
   async getArticle(request: Request, response: Response) {
     try {
-      const result = await articleService.getArticle(request.params.id);
+      const result = await ArticleService.getArticle(request.params.id);
       response.status(200).json(result);
     } catch (error) {
       throw ApiError.InternalServerError("Ошибка получения статьи");
@@ -36,7 +45,7 @@ class ArticleController {
       return response.json({ valid: false });
     }
     try {
-      const result = await articleService.checkSlug(request.params.id);
+      const result = await ArticleService.checkSlug(request.params.id);
       response.json(result);
     } catch (error) {
       throw ApiError.InternalServerError("Ошибка проверки ссылки статьи");
@@ -45,7 +54,7 @@ class ArticleController {
 
   async viewArticle(request: Request, response: Response) {
     try {
-      const result = await articleService.viewArticle(request.params.id);
+      const result = await ArticleService.viewArticle(request.params.id);
       response.status(200).json(result);
     } catch (error) {
       throw ApiError.InternalServerError("Ошибка увеличения просмотров статьи");
@@ -57,7 +66,7 @@ class ArticleController {
       throw ApiError.BadRequest("Нет файлов для загрузки");
     }
     try {
-      const result = await articleService.addArticle(
+      const result = await ArticleService.addArticle(
         request.body,
         request.files,
       );
@@ -69,7 +78,7 @@ class ArticleController {
 
   async deleteArticle(request: Request, response: Response) {
     try {
-      const result = await articleService.deleteArticle(request.params.id);
+      const result = await ArticleService.deleteArticle(request.params.id);
       response.status(200).json(result);
 
       if (result) {
@@ -82,7 +91,7 @@ class ArticleController {
 
   async updateArticle(request: Request, response: Response) {
     try {
-      const result = await articleService.updateArticle(
+      const result = await ArticleService.updateArticle(
         request.params.id,
         request.body,
       );
