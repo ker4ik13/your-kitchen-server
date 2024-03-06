@@ -2,14 +2,15 @@ import { SITE_URL } from "../../helpers/constants";
 import type { IArticle } from "../../types/IArticle";
 import { articlePageTemplate } from "../pages";
 
+// <pubDate>${article.createdAt}</pubDate>
+// <author>Твоя кухня</author>
+
 export const articleRssTemplate = (article: IArticle): string => {
   return `<item turbo="true">
 			<!-- Информация о странице -->
 			<title>${article.title} | Твоя кухня</title>
 			<turbo:extendedHtml>true</turbo:extendedHtml>
 			<link>${SITE_URL}/articles/${article.link}</link>
-			<pubDate>${article.createdAt}</pubDate>
-			<author>Твоя кухня</author>
 			<metrics>
 				<yandex schema_identifier="Идентификатор">
 					<breadcrumblist>
