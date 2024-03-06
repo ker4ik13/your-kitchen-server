@@ -15,7 +15,7 @@ export const articlesChannelTemplate = (
         <channel>
             <!-- Информация о сайте-источнике -->
             <title>Полезные статьи про кухни</title>
-            <link>${SITE_URL}articles/</link>
+            <link>${SITE_URL}/articles/</link>
             <description>Статьи о мебели для кухни: организация пространства, дизайн и стиль кухни, материалы, нюансы и тонкости проектирования. Рекомендации по выбору кухонной мебели на заказ, ответы на частые вопросы.</description>
             <language>ru</language>
 
