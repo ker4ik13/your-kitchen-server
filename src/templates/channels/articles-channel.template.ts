@@ -1,4 +1,4 @@
-import { SITE_URL } from "../../helpers/constants";
+import { SITE_URL, YANDEX_ANALYTICS } from "../../helpers/constants";
 import type { IArticle } from "../../types/IArticle";
 import { articleRssTemplate } from "../rss";
 
@@ -13,15 +13,16 @@ export const articlesChannelTemplate = (
         xmlns:turbo="http://turbo.yandex.ru"
         version="2.0">
         <channel>
-            <!-- Информация о сайте-источнике -->
-            <title>Полезные статьи про кухни</title>
-            <link>${SITE_URL}/articles/</link>
-            <description>Статьи о мебели для кухни: организация пространства, дизайн и стиль кухни, материалы, нюансы и тонкости проектирования. Рекомендации по выбору кухонной мебели на заказ, ответы на частые вопросы.</description>
-            <language>ru</language>
+          <!-- Информация о сайте-источнике -->
+          <title>Полезные статьи про кухни | RSS</title>
+          <link>${SITE_URL}/articles/</link>
+          <description>Статьи о мебели для кухни: организация пространства, дизайн и стиль кухни, материалы, нюансы и тонкости проектирования. Рекомендации по выбору кухонной мебели на заказ, ответы на частые вопросы.</description>
+          <turbo:analytics type="Yandex" id="${YANDEX_ANALYTICS}"></turbo:analytics>
+          <language>ru</language>
 
-            ${articles.map((article) => {
-              return articleRssTemplate(article);
-            })}
+          ${articles.map((article) => {
+            return articleRssTemplate(article);
+          })}
         </channel>
     </rss>`;
 };

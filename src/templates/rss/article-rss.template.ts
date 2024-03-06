@@ -7,8 +7,6 @@ export const articleRssTemplate = (article: IArticle): string => {
 			<!-- Информация о странице -->
 			<turbo:extendedHtml>true</turbo:extendedHtml>
 			<link>${SITE_URL}/articles/${article.link}</link>
-			<turbo:source></turbo:source>
-			<turbo:topic></turbo:topic>
 			<pubDate>${article.createdAt}</pubDate>
 			<author>Твоя кухня</author>
 			<metrics>
