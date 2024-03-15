@@ -1,6 +1,5 @@
 import { SITE_URL } from "../../helpers/constants";
 import type { IArticle } from "../../types/IArticle";
-import { articleCardTemplate } from "../rss/article-card.template";
 
 export const articlePageTemplate = (
   article: IArticle,
@@ -22,12 +21,6 @@ export const articlePageTemplate = (
 			<p class="readMore__line"></p>
 			<p class="reatMore__text">Читать другие статьи</p>
 			<p class="readMore__line"></p>
-		</div>
-		<div class="moreArticles">
-			${moreArticles
-        .filter((item) => item.link !== article.link)
-        .slice(0, 3)
-        .map((moreArticleItem) => articleCardTemplate(moreArticleItem))}
 		</div>
 	</div>`;
 };
